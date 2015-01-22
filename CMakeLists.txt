@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
 
-project(QtMacOpenGL)
+project(GooeyGL)
 
 # Set C++11 and any other flags
 if (NOT MSVC)
@@ -9,7 +9,6 @@ if (NOT MSVC)
 endif()
 
 # Handle Qt Moccing.
-set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Find all require QT Modules
@@ -36,6 +35,9 @@ set(UIS Resources/Forms/gooeymain.ui)
 #     set(SOURCES ${SOURCES} win/example.rc)
 # endif ()
 
+# Wrap the header files containing qobjects for moccing
+qt5_wrap_cpp(MOC_FILES ${HEADERS})
+
 # Wrap the Qt UI Headers. You have to do this instead of autouic if 
 # your ui files are in a seperate directory
 qt5_wrap_ui(GEN_UI_HEADERS ${UIS})
@@ -52,29 +54,33 @@ endif ()
 # Preprocessor Defs
 add_definitions(-DQT_DLL)
 
+# Set the source groups to make IDE stuff pretty
+source_group(Forms FILES ${UIS})
+source_group("Generated Files" FILES ${MOC_FILES} ${GEN_UI_HEADERS})
+
 # Add all of the source files
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Source ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Forms)
-add_executable(QtMacOpenGL MACOSX_BUNDLE ${SOURCES} ${HEADERS} ${GEN_UI_HEADERS})
+add_executable(GooeyGL MACOSX_BUNDLE ${SOURCES} ${HEADERS} ${GEN_UI_HEADERS} ${MOC_FILES})
 
 # Mac OSX Bundle Config
-set(MACOSX_BUNDLE_BUNDLE_NAME "QtMacOpenGL")
+set(MACOSX_BUNDLE_BUNDLE_NAME "GooeyGL")
 set(MACOSX_BUNDLE_BUNDLE_VERSION "1.0")
 set(MACOSX_BUNDLE_LONG_VERSION_STRING "1.0")
 set(MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0")
 set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2015 Matthew Iannucci. All rights reserved.")
-set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.nucc.QtMacOpenGL")
+set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.nucc.GooeyGL")
 set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
 
 if (APPLE)
-    set_target_properties(QtMacOpenGL PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Info.plist.in)
+    set_target_properties(GooeyGL PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Info.plist.in)
 endif ()
 
 # Link the qt modules
-target_link_libraries(QtMacOpenGL Qt5::Widgets Qt5::Core Qt5::Gui Qt5::OpenGL)
+target_link_libraries(GooeyGL Qt5::Widgets Qt5::Core Qt5::Gui Qt5::OpenGL)
 
 # Windows Executable 
 if (MSVC)
-    target_link_libraries(QtMacOpenGL Qt5::WinMain)
+    target_link_libraries(GooeyGL Qt5::WinMain)
     set_target_properties(${PROJECT} PROPERTIES
         WIN32_EXECUTABLE YES
         LINK_FLAGS "/ENTRY:mainCRTStartup"

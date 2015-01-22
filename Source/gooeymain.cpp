@@ -27,6 +27,8 @@ GooeyMain* GooeyMain::getInstance() {
 
 void GooeyMain::init() {
     
+    this->setWindowTitle("GooeyGL");
+    
     createConnections();
 }
 
