@@ -20,6 +20,9 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 
+# Clion ide files
+.idea/
+
 # QtCreator
 *.autosave
 
