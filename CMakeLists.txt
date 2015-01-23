@@ -26,8 +26,10 @@ endif (OPENGL_FOUND)
 
 # Set the source files 
 set(SOURCES Source/main.cpp 
-            Source/gooeymain.cpp)
-set(HEADERS Source/gooeymain.h)
+            Source/gooeymain.cpp
+            Source/waterview.cpp)
+set(HEADERS Source/gooeymain.h
+            Source/waterview.h)
 set(UIS Resources/Forms/gooeymain.ui)
 
 # Handle Win32 Resources and Qt main lib
@@ -76,7 +78,7 @@ if (APPLE)
 endif ()
 
 # Link the qt modules
-target_link_libraries(GooeyGL Qt5::Widgets Qt5::Core Qt5::Gui Qt5::OpenGL)
+target_link_libraries(GooeyGL Qt5::Widgets Qt5::Core Qt5::Gui Qt5::OpenGL ${OPENGL_LIBRARIES})
 
 # Windows Executable 
 if (MSVC)

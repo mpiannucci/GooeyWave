@@ -9,6 +9,12 @@ GooeyMain::GooeyMain(QWidget* parent) :
 {
     // Set up the UI
     ui->setupUi(this);
+    
+    // Initialize the gl context
+    m_glFormat.setVersion(3, 3);
+    m_glFormat.setProfile(QGLFormat::CoreProfile);
+    m_glFormat.setSwapInterval(1);
+    QGLFormat::setDefaultFormat(m_glFormat);
 
     // Initialize the gui
     init();
@@ -26,8 +32,10 @@ GooeyMain* GooeyMain::getInstance() {
 }
 
 void GooeyMain::init() {
-    
     this->setWindowTitle("GooeyGL");
+    
+    m_waterView = std::shared_ptr<WaterView>(new WaterView(m_glFormat, this));
+    ui->mainVerticalLayout->addWidget(m_waterView.get());
     
     createConnections();
 }

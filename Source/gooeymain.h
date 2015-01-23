@@ -2,6 +2,7 @@
 #define GOOEYMAIN_H
 
 #include <QMainWindow>
+#include "waterview.h"
 
 namespace Ui {
 class GooeyMain;
@@ -21,6 +22,8 @@ public:
 
 private:
     Ui::GooeyMain* ui;
+    QGLFormat m_glFormat;
+    std::shared_ptr<WaterView> m_waterView;
 
     // Singleton instance
     static GooeyMain* m_pInstance;
