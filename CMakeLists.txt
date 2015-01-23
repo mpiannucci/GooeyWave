@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
 
-project(GooeyGL)
+project(GooeyWave)
+set(PROJECT_LONGNAME "GooeyWave")
 
 # Set C++11 and any other flags
 if (NOT MSVC)
@@ -62,10 +63,10 @@ source_group("Generated Files" FILES ${MOC_FILES} ${GEN_UI_HEADERS})
 
 # Add all of the source files
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Source ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Forms)
-add_executable(GooeyGL MACOSX_BUNDLE ${SOURCES} ${HEADERS} ${GEN_UI_HEADERS} ${MOC_FILES})
+add_executable(${PROJECT_LONGNAME} MACOSX_BUNDLE ${SOURCES} ${HEADERS} ${GEN_UI_HEADERS} ${MOC_FILES})
 
 # Mac OSX Bundle Config
-set(MACOSX_BUNDLE_BUNDLE_NAME "GooeyGL")
+set(MACOSX_BUNDLE_BUNDLE_NAME ${PROJECT_LONGNAME})
 set(MACOSX_BUNDLE_BUNDLE_VERSION "1.0")
 set(MACOSX_BUNDLE_LONG_VERSION_STRING "1.0")
 set(MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0")
@@ -74,15 +75,15 @@ set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.nucc.GooeyGL")
 set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
 
 if (APPLE)
-    set_target_properties(GooeyGL PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Info.plist.in)
+    set_target_properties(${PROJECT_LONGNAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Info.plist.in)
 endif ()
 
 # Link the qt modules
-target_link_libraries(GooeyGL Qt5::Widgets Qt5::Core Qt5::Gui Qt5::OpenGL ${OPENGL_LIBRARIES})
+target_link_libraries(${PROJECT_LONGNAME} Qt5::Widgets Qt5::Core Qt5::Gui Qt5::OpenGL ${OPENGL_LIBRARIES})
 
 # Windows Executable 
 if (MSVC)
-    target_link_libraries(GooeyGL Qt5::WinMain)
+    target_link_libraries(${PROJECT_LONGNAME} Qt5::WinMain)
     set_target_properties(${PROJECT} PROPERTIES
         WIN32_EXECUTABLE YES
         LINK_FLAGS "/ENTRY:mainCRTStartup"
