@@ -1,3 +1,7 @@
+THIS PORJECT IS NOT IN DEVELOPMENT, IT WAS JUST A TEST FOR CREATING QT OPEN GL APPS
+=============
+
+
 GooeyWave
 =============
 
